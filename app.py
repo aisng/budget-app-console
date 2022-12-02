@@ -11,8 +11,7 @@ while True:
                 sender = input("Įveskite siuntėją: ")
                 additional_info = input("Įveskite papildomą informaciją: ")
                 my_budget.add_income_to_journal(amount, sender, additional_info)
-                # my_budget.append(income_in)
-                # add_to_pickle(budget)
+
             case 2:
                 amount = float(input("\nĮveskite sumą: "))
                 commodity = input("Įveskite prekę: ")
@@ -23,7 +22,7 @@ while True:
                 print(f"{' Pajamos: ':*^60}\n{'Nr.':<5}{'Suma':^15}{'Siuntėjas':^20}{'Papildoma info':^20}\n",
                       my_budget.get_history()[0])
                 print(f"{' Išlaidos: ':*^60}\n{'Nr.':<5}{'Suma':^15}{'Prekė':^20}{'Atsiskaitymo būdas':^20}\n",
-                      my_budget.get_history()[0])
+                      my_budget.get_history()[1])
             case 4:
                 print("\nBalansas:", my_budget.get_balance())
             case 5:
