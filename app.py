@@ -1,32 +1,49 @@
 from modules.budget import Budget
+from modules.validators import validate_option, validate_amount
 
 my_budget = Budget()
 while True:
-    try:
-        user_input = int(input("Pasirinkite veiksmą:\n1. Įvesti pajamas\n2. Įvesti išlaidas\n3. Parodyti įvestas "
-                               "pajamas ir išlaidas\n4. Parodyti pajamų ir išlaidų balansą\n5. Išeiti\nVeiksmas: "))
-        match user_input:
-            case 1:
-                amount = float(input("\nĮveskite sumą: "))
-                sender = input("Įveskite siuntėją: ")
-                additional_info = input("Įveskite papildomą informaciją: ")
-                my_budget.add_income_to_journal(amount, sender, additional_info)
+    user_option = input("choose operation\n1 - enter income\n2 - enter expense\n3 - show balance\n4 - show "
+                        "report\n0 - exit\nyour choice: ")
 
-            case 2:
-                amount = float(input("\nĮveskite sumą: "))
-                commodity = input("Įveskite prekę: ")
-                payment_type = input("Įveskite mokėjimo tipą: ")
-                my_budget.add_expenses_to_journal(amount, commodity, payment_type)
-            case 3:
-                print("\nPajamų ir išlaidų istorija.")
-                print(f"{' Pajamos: ':*^60}\n{'Nr.':<10}{'Suma':<15}{'Siuntėjas':<20}{'Papildoma info':<20}\n",
-                      my_budget.get_history()[0])
-                print(f"{' Išlaidos: ':*^60}\n{'Nr.':<10}{'Suma':<15}{'Prekė':<20}{'Atsiskaitymo būdas':<20}\n",
-                      my_budget.get_history()[1])
-            case 4:
-                print("\nBalansas:", my_budget.get_balance())
-            case 5:
-                print("\nIki pasimatymo.")
-                break
-    except ValueError:
-        print("\nNeteisingas pasirinkimas.\n")
+    if not validate_option(user_option):
+        print(f"\ninvalid operation choice '{user_option}'\nmust an integer between 0 and 4 inclusively\n")
+    else:
+        user_option = int(user_option)
+
+    match user_option:
+        case 1:
+            user_income = input("income amount: ")
+            if validate_amount(user_income):
+                sender = input("sender: ")
+                info = input("additional info: ")
+                my_budget.add_income(user_income, sender, info)
+                print(f"\namount of ${round(float(user_income), 2):.2f} has been added as 'income'\n")
+            else:
+                print(f"\nincorrect income amount '${user_income}'\n")
+        case 2:
+            user_expense = input("expense amount: ")
+            if validate_amount(user_expense):
+                paid_with = input("payment type: ")
+                spent_on = input("commodity acquired: ")
+                my_budget.add_expense(user_expense, paid_with, spent_on)
+                print(f"\namount of ${round(float(user_expense), 2):.2f} has been added as 'expense'\n")
+            else:
+                print(f"\nincorrect expense amount '${user_expense}'\n")
+        case 3:
+            balance = my_budget.get_balance()
+            print(f"\ncurrent balance: ${balance}", end="")
+            print()
+        case 4:
+            print(f"\n{' budget report ':=^80}")
+            print(f"{' income ':_^80}")
+            print(f"{'no.':<8}{'amount':<15}{'sender':<30}{'additional info':<40}")
+            print()
+            print(my_budget.get_report()[0])
+            print(f"{' expenses ':_^80}")
+            print(f"{'no.':<8}{'amount':<15}{'payment type':<30}{'commodity acquired':<40}")
+            print()
+            print(my_budget.get_report()[1])
+        case 0:
+            print("\ngoodbye")
+            break
