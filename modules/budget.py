@@ -1,4 +1,5 @@
 import pickle
+import textwrap
 from modules.expenses_entry import ExpensesEntry
 from modules.income_entry import IncomeEntry
 
@@ -44,9 +45,9 @@ class Budget:
         expenses = str()
         for nr, item in enumerate(self.journal, 1):
             if type(item) is IncomeEntry:
-                income += f"{nr : <5}{item.amount : ^15}{item.sender : ^20}{item.additional_info : ^20}\n"
+                income += f"{nr : <10}{item.amount:<15}{item.sender:<20}{item.additional_info:<20}\n"
             if type(item) is ExpensesEntry:
-                expenses += f"{nr : <5}\t{item.amount : ^15}\t {item.commodity : ^20}\t {item.payment_type : ^20}\n"
+                expenses += f"{nr : <10}{item.amount:<15}{item.commodity:<20}{textwrap.fill(item.payment_type, 20):<20}\n"
 
         return [income, expenses]
 

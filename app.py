@@ -19,9 +19,9 @@ while True:
                 my_budget.add_expenses_to_journal(amount, commodity, payment_type)
             case 3:
                 print("\nPajamų ir išlaidų istorija.")
-                print(f"{' Pajamos: ':*^60}\n{'Nr.':<5}{'Suma':^15}{'Siuntėjas':^20}{'Papildoma info':^20}\n",
+                print(f"{' Pajamos: ':*^60}\n{'Nr.':<10}{'Suma':<15}{'Siuntėjas':<20}{'Papildoma info':<20}\n",
                       my_budget.get_history()[0])
-                print(f"{' Išlaidos: ':*^60}\n{'Nr.':<5}{'Suma':^15}{'Prekė':^20}{'Atsiskaitymo būdas':^20}\n",
+                print(f"{' Išlaidos: ':*^60}\n{'Nr.':<10}{'Suma':<15}{'Prekė':<20}{'Atsiskaitymo būdas':<20}\n",
                       my_budget.get_history()[1])
             case 4:
                 print("\nBalansas:", my_budget.get_balance())
