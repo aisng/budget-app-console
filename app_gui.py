@@ -7,34 +7,51 @@ ctk.set_default_color_theme("green")
 
 root = ctk.CTk()
 root.geometry("400x500")
+root.resizable(False, False)
 root.title("My Budget")
 
-left_frame = ctk.CTkFrame(master=root)
-left_frame.pack(expand=True, fill=ctk.BOTH, padx=10, pady=10)
+entries_frame = ctk.CTkFrame(master=root, width=350, height=215)
+balance_frame = ctk.CTkFrame(master=root, width=350, height=215)
+entries_frame.grid(row=0, column=0, padx=25, pady=(25, 10), sticky='NSEW')
+balance_frame.grid(row=1, column=0, padx=25, pady=(10, 25), sticky='NSEW')
 
-entries_frame = ctk.CTkFrame(master=left_frame)
-balance_frame = ctk.CTkFrame(master=left_frame)
+# entries_frame.pack(expand=True, fill=ctk.BOTH, padx=16, pady=(16, 8))
+# balance_frame.pack(expand=True, fill=ctk.BOTH, padx=16, pady=(8, 16))
 
-entries_frame.pack(expand=True, fill=ctk.BOTH, padx=16, pady=(16, 8))
-balance_frame.pack(expand=True, fill=ctk.BOTH, padx=16, pady=(8, 16))
+# variables
+
+amount_entry = ctk.StringVar()
 
 # entries frame
 
-income_entry = ctk.CTkEntry(master=entries_frame, placeholder_text="enter your income")
-btn_submit_income = ctk.CTkButton(master=entries_frame, text="Submit", width=100)
+user_amount = ctk.CTkEntry(master=entries_frame, placeholder_text="Enter your income")
+btn_submit = ctk.CTkButton(master=entries_frame, text="Submit")
+type_label = ctk.CTkLabel(master=entries_frame, text="Choose type:")
 
-expense_entry = ctk.CTkEntry(master=entries_frame, placeholder_text="enter your expense")
-btn_submit_expense = ctk.CTkButton(master=entries_frame, text="Submit", width=100)
+type_income_rb = ctk.CTkRadioButton(master=entries_frame, variable=amount_entry, text="Income")
+type_expense_rb = ctk.CTkRadioButton(master=entries_frame, variable=amount_entry, text="Expense")
 
-# pakcking entries to entries frame
+type_label.grid(column=3, row=0, sticky='NSEW')
+type_income_rb.grid(column=3, row=1, sticky='NSEW')
+type_expense_rb.grid(column=3, row=2, sticky='NSEW')
 
-income_entry.grid(row=0, column=0, padx=8, pady=8, sticky=ctk.W)
-btn_submit_income.grid(row=0, column=1, padx=8, pady=8, sticky=ctk.W)
+user_amount.grid(column=1, row=2, columnspan=2, sticky='NSEW')
+btn_submit.grid(column=1, row=4, columnspan=3, sticky='NSEW')
 
-expense_entry.grid(row=1, column=0, padx=8, pady=8, sticky=ctk.W)
-btn_submit_expense.grid(row=1, column=1, padx=8, pady=8, sticky=ctk.W)
+#
+#
 
-entries_frame.columnconfigure(0, weight=1)
-entries_frame.columnconfigure(1, weight=2)
+#
+# # pakcking entries to entries frame
+#
+# type_label.grid(row=0, column=3)
+# user_amount.grid(row=2, column=0, rowspan=2, sticky=ctk.E)
+# btn_submit.grid(row=4, column=0, rowspan=2, sticky=ctk.E)
+#
+# select_type_income.grid(row=2, column=3)
+# select_type_expense.grid(row=3, column=3)
+
+# entries_frame.columnconfigure(0, weight=1)
+# entries_frame.columnconfigure(1, weight=2)
 
 root.mainloop()
